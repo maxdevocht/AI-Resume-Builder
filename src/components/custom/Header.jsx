@@ -8,7 +8,7 @@ const Header = () => {
 
   return (
     <div className="flex justify-between items-center p-3 px-5 shadow-md">
-      <img src="/logo.svg" alt="ResumAI" width={50} height={50} />
+      <img src="/logo.svg" alt="ResumAI" width={40} height={40} />
 
       {isSignedIn ? (
         <div className="flex gap-2 items-center">
