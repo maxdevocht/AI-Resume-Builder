@@ -1,4 +1,3 @@
-import { CirclePlusFill } from "akar-icons";
 import React, { useState } from "react";
 import {
   Dialog,
@@ -13,7 +12,7 @@ import { Input } from "@/components/ui/input";
 import { v4 as uuidv4 } from "uuid";
 import GlobalApi from "./../../../service/GlobalApi";
 import { useUser } from "@clerk/clerk-react";
-import { Loader2 } from "lucide-react";
+import { Loader2, PlusSquare, Square } from "lucide-react";
 
 const AddResume = () => {
   const [openDialog, setOpenDialog] = useState(false);
@@ -48,10 +47,10 @@ const AddResume = () => {
   return (
     <div>
       <div
-        className="p-40 py-24 border items-center flex justify-center bg-secondary rounded-lg h-[280px] hover:scale-105 transition-all hover:shadow-md cursor-pointer border-dashed"
+        className="p-40 py-24 border items-center flex justify-center bg-secondary rounded-lg h-[280px] hover:scale-105 transition-all hover:shadow-md cursor-pointer border-dashed border-[#ff630b]"
         onClick={() => setOpenDialog(true)}
       >
-        <CirclePlusFill />
+        <PlusSquare />+
       </div>
 
       <Dialog open={openDialog} onOpenChange={setOpenDialog}>
