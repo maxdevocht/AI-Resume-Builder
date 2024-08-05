@@ -1,3 +1,4 @@
+import { Loader2, PlusSquare } from "lucide-react";
 import React, { useState } from "react";
 import {
   Dialog,
@@ -12,7 +13,6 @@ import { Input } from "@/components/ui/input";
 import { v4 as uuidv4 } from "uuid";
 import GlobalApi from "./../../../service/GlobalApi";
 import { useUser } from "@clerk/clerk-react";
-import { Loader2, PlusSquare, Square } from "lucide-react";
 
 const AddResume = () => {
   const [openDialog, setOpenDialog] = useState(false);
@@ -50,7 +50,7 @@ const AddResume = () => {
         className="p-40 py-24 border items-center flex justify-center bg-secondary rounded-lg h-[280px] hover:scale-105 transition-all hover:shadow-md cursor-pointer border-dashed border-[#ff630b]"
         onClick={() => setOpenDialog(true)}
       >
-        <PlusSquare />+
+        <PlusSquare />
       </div>
 
       <Dialog open={openDialog} onOpenChange={setOpenDialog}>
