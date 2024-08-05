@@ -32,7 +32,7 @@ const AddResume = () => {
         userName: user?.fullName,
       },
     };
-    GlobalApi.CreateNewResume(data).then(
+    GlobalApi.createNewResume(data).then(
       (resp) => {
         console.log(resp);
         if (resp) {
@@ -70,7 +70,7 @@ const AddResume = () => {
               <Button onClick={() => setOpenDialog(false)} variant="ghost">
                 Cancel
               </Button>
-              <Button disabled={!resumeTitle || loading} onClick={onCreate()}>
+              <Button disabled={!resumeTitle || loading} onClick={onCreate}>
                 {loading ? <Loader2 className="animate-spin" /> : "Create"}
               </Button>
             </div>

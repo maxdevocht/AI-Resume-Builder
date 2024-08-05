@@ -1,6 +1,7 @@
-const { default: axios } = require("axios");
+import axios from "axios";
 
 const API_KEY = import.meta.env.VITE_STRAPI_API_KEY;
+
 const axiosClient = axios.create({
   baseURL: "http://localhost:1337/api/",
   headers: {
@@ -9,6 +10,6 @@ const axiosClient = axios.create({
   },
 });
 
-const CreateNewResume = (data) => axiosClient.post("/user-resumes", data);
+const createNewResume = (data) => axiosClient.post("/user-resumes", data);
 
-export default { CreateNewResume };
+export default { createNewResume };
