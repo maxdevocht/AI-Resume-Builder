@@ -18,7 +18,7 @@ export default {
       startDate: "Jan 2021",
       endDate: "",
       currentlyWorking: true,
-      workSummery:
+      workSummary:
         " Designed, developed, and maintained full-stack applications using React and Node.js.\n" +
         "• Implemented responsive user interfaces with React, ensuring seamless user experiences across\n" +
         "various devices and browsers.\n" +
@@ -35,7 +35,7 @@ export default {
       startDate: "May 2019",
       endDate: "Jan 2021",
       currentlyWorking: false,
-      workSummery:
+      workSummary:
         " Designed, developed, and maintained full-stack applications using React and Node.js." +
         "• Implemented responsive user interfaces with React, ensuring seamless user experiences across" +
         "various devices and browsers." +
@@ -75,17 +75,17 @@ export default {
     {
       id: 1,
       name: "React",
-      rating: 100,
+      rating: 90,
     },
     {
       id: 1,
       name: "MySql",
-      rating: 80,
+      rating: 60,
     },
     {
       id: 1,
       name: "React Native",
-      rating: 100,
+      rating: 70,
     },
   ],
 };
