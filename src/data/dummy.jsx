@@ -49,7 +49,7 @@ export default {
       id: 1,
       universityName: "Western Illinois University",
       startDate: "Aug 2018",
-      endDate: "Dec:2019",
+      endDate: "Dec 2019",
       degree: "Master",
       major: "Computer Science",
       description:
@@ -59,7 +59,7 @@ export default {
       id: 2,
       universityName: "Western Illinois University",
       startDate: "Aug 2018",
-      endDate: "Dec:2019",
+      endDate: "Dec 2019",
       degree: "Master",
       major: "Computer Science",
       description:
