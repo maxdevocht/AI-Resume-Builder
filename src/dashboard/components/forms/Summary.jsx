@@ -6,12 +6,17 @@ import { useParams } from "react-router-dom";
 import GlobalApi from "/service/GlobalApi";
 import { LoaderCircle, Sparkles } from "lucide-react";
 import { toast } from "sonner";
+import { AIChatSession } from "/service/AIModel";
+
+const prompt =
+  "Job Title: {jobTitle}, depends on job title give me a summary of my resume within 4-5 lines in JSON format with field experience level and summary with experience level for fresher, mid-level, experienced";
 
 const Summary = ({ enableNext }) => {
   const { resumeInfo, setResumeInfo } = useContext(ResumeInfoContext);
   const [summary, setSummary] = useState();
   const [loading, setLoading] = useState(false);
   const params = useParams();
+  const [aiGeneratedSummaryList, setAiGeneratedSummaryList] = useState();
 
   useEffect(() => {
     summary &&
@@ -20,6 +25,14 @@ const Summary = ({ enableNext }) => {
         summary: summary,
       });
   }, [summary]);
+
+  const generateSummaryFromAI = async () => {
+    setLoading(true);
+    const PROMPT = prompt.replace("{jobTitle}", resumeInfo?.jobTitle);
+    const result = await AIChatSession.sendMessage(PROMPT);
+    setAiGeneratedSummaryList(JSON.parse([result.response.text()]));
+    setLoading(false);
+  };
 
   const onSave = (e) => {
     enableNext(false);
@@ -54,6 +67,7 @@ const Summary = ({ enableNext }) => {
           <div className="flex justify-between items-end">
             <label htmlFor="">Add Summary</label>
             <Button
+              onClick={() => generateSummaryFromAI()}
               variant="outline"
               type="button"
               size="sm"
@@ -74,6 +88,18 @@ const Summary = ({ enableNext }) => {
           </div>
         </form>
       </div>
+
+      {aiGeneratedSummaryList && (
+        <div>
+          <h2 className="font-bold text-lg">Suggestions</h2>
+          {aiGeneratedSummaryList.map((item, index) => (
+            <div>
+              <h2 className="font-bold my-1">Level: {item?.experienceLevel}</h2>
+              <p>{item?.summary}</p>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
