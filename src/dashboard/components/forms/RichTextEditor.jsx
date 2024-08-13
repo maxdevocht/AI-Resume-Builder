@@ -21,27 +21,43 @@ import { toast } from "sonner";
 const PROMPT =
   "position title: {positionTitle} , Depends on position title give me 5-7 bullet points for my experience in resume (Please do not add experience level and No JSON array) , give me result in HTML tags";
 
-const RichTextEditor = ({ onRichTextEditorChange, index }) => {
-  const [value, setValue] = useState();
+const RichTextEditor = ({ onRichTextEditorChange, index, defaultValue }) => {
+  const [value, setValue] = useState(defaultValue);
   const { resumeInfo, setResumeInfo } = useContext(ResumeInfoContext);
   const [loading, setLoading] = useState(false);
 
   const generateSummaryFromAI = async () => {
-    setLoading(true);
-    if (!resumeInfo.experience[index].title) {
+    if (
+      !resumeInfo.experience ||
+      !resumeInfo.experience[index] ||
+      !resumeInfo.experience[index].title
+    ) {
       toast("Please Add Position Title");
       return;
     }
-    const prompt = PROMPT.replace(
-      "{positionTitle}",
-      resumeInfo.experience[index].title
-    );
 
-    const result = await AIChatSession.sendMessage(prompt);
+    setLoading(true);
+    try {
+      const prompt = PROMPT.replace(
+        "{positionTitle}",
+        resumeInfo.experience[index].title
+      );
 
-    const resp = JSON.parse(result.response.text());
-    setValue(resp[0]);
-    setLoading(false);
+      const result = await AIChatSession.sendMessage(prompt);
+
+      // Await and process the response
+      const resp = await result.response.text();
+
+      // Remove unwanted brackets from the response
+      setValue(resp.replace("[", "").replace("]", ""));
+    } catch (error) {
+      // Handle any errors that occur during the API call
+      console.error("Error generating summary:", error);
+      toast("Google Gemini AI is not available in your Country.");
+    } finally {
+      // Always set loading to false in the finally block
+      setLoading(false);
+    }
   };
 
   return (

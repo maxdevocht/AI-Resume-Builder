@@ -3,6 +3,10 @@ import { Input } from "@/components/ui/input";
 import React, { useContext, useEffect, useState } from "react";
 import RichTextEditor from "./RichTextEditor";
 import { ResumeInfoContext } from "@/context/ResumeInfoContext";
+import { LoaderCircle } from "lucide-react";
+import { toast } from "sonner";
+import GlobalApi from "/service/GlobalApi";
+import { useParams } from "react-router-dom";
 
 const formField = {
   title: "",
@@ -16,13 +20,23 @@ const formField = {
 
 const Experience = () => {
   const [experienceList, setExperienceList] = useState([formField]);
-
   const { resumeInfo, setResumeInfo } = useContext(ResumeInfoContext);
+  const params = useParams();
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    console.log("resumeInfo:", resumeInfo);
+    console.log("resumeInfo.Experience:", resumeInfo?.Experience);
+    if (resumeInfo?.Experience && resumeInfo.Experience.length > 0) {
+      setExperienceList(resumeInfo.Experience);
+    }
+  }, [resumeInfo]);
 
   const handleChange = (index, e) => {
     const newEntries = experienceList.slice();
     const { name, value } = e.target;
     newEntries[index][name] = value;
+    console.log(newEntries);
     setExperienceList(newEntries);
   };
 
@@ -32,6 +46,28 @@ const Experience = () => {
 
   const removeExperience = () => {
     setExperienceList((experienceList) => experienceList.slice(0, -1));
+  };
+
+  const onSave = () => {
+    setLoading(true);
+    const data = {
+      data: {
+        Experience: experienceList.map(({ id, ...rest }) => rest),
+      },
+    };
+
+    console.log(experienceList);
+
+    GlobalApi.UpdateResumeDetail(params?.resumeId, data).then(
+      (res) => {
+        console.log(res);
+        setLoading(false);
+        toast("Details updated !");
+      },
+      (error) => {
+        setLoading(false);
+      }
+    );
   };
 
   const handleRichtextEditor = (e, name, index) => {
@@ -148,7 +184,6 @@ const Experience = () => {
                 - Remove
               </Button>
             </div>
-            <Button>Save</Button>
           </div>
         </div>
       </div>
